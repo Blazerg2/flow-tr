@@ -6,12 +6,13 @@ import (
 	"log"
 	"github.com/gorilla/mux"
 	"encoding/json"
+	"os"
 )
 
 func main() {
 	fmt.Println("Server started")
 	router := NewRouter()
-	server := http.ListenAndServe(":8080", router)
+	server := http.ListenAndServe(GetPort(), router)
 	log.Fatal(server)
 }
 
@@ -33,4 +34,15 @@ func GetPagesList(w http.ResponseWriter, r *http.Request) {
 		Page{"la prueba 4", 2, 4},
 	}
 	json.NewEncoder(w).Encode(pages)
+}
+
+// Get the Port from the environment so we can run on Heroku
+func GetPort() string {
+	var port = os.Getenv("PORT")
+	// Set a default port if there is nothing in the environment
+	if port == "" {
+		port = "4747"
+		fmt.Println("INFO: No PORT environment variable detected, defaulting to " + port)
+	}
+	return ":" + port
 }
