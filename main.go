@@ -14,7 +14,6 @@ import (
 
 func main() {
 	fmt.Println("Server started")
-	fmt.Println(os.Getenv("ATLAS_TEST_G"))
 	router := NewRouter()
 	server := http.ListenAndServe(GetPort(), router)
 	log.Fatal(server)
