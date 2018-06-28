@@ -38,9 +38,15 @@ var routes = Routes{
 		GetPageVar,
 	},
 	Route{
-		"getPagesList",
+		"GetPagesList",
 		"GET",
 		"/pages",
 		GetPagesList,
+	},
+	Route{
+		"PostPagesList",
+		"POST",
+		"/pages",
+		PostPagesList,
 	},
 }
