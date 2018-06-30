@@ -1,9 +1,10 @@
 package main
 
 type Page struct {
-	Text      string `json:"text"`
-	InStates  int    `json:"intStates"`
-	OutStates int    `json:"outStates"`
+	Text      string   `json:"text"`
+	InState   int      `json:"intStates"`
+	Character string   `json:"character"`
+	Decisions []string `json:"decisions"`
 }
 
 type Pages []Page
