@@ -5,6 +5,7 @@ type Page struct {
 	InState   int        `json:"intStates"`
 	Character string     `json:"character"`
 	Decisions []Decision `json:"decisions"`
+	IsFinal   bool       `json:"isFinal"`
 }
 
 type Decision struct {
