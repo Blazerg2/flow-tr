@@ -1,0 +1,62 @@
+version: '2'
+services:
+  web:
+    build:
+      dockerfile: ./docker/Dockerfile
+      context: ./
+    container_name: web
+    stdin_open: true
+    tty: true
+    command: "go run main.go"
+    volumes:
+      - .:/go
+    ports:
+      - "4747:4747"
+    environment:
+      MONGO_URI: mongodb://root:password@mongo:27017
+      MONGO_DATABASE: test
+    depends_on:
+      - db
+  db:
+    image: mongo
+    # ports:
+    #   - "27017:27017"
+    volumes:
+      - ./volumes/mongo:/data/db
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: password
+
+  # mongo:
+  #   image: mongo
+  #   command:
+  #   # ports:
+  #   #   - "27017:27017"
+  #   volumes:
+  #     - ./volumes/mongo2:/data/db
+  #   environment:
+  #     MONGO_INITDB_ROOT_USERNAME: root
+  #     MONGO_INITDB_ROOT_PASSWORD: password
+
+# docker run -it --rm --link flow-tr_db_1:mongo mongo mongo --host mongo -u root -p password --authenticationDatabase admin test
+# dcp run --rm db mongo --host mongo -u root -p password --authenticationDatabase admin test
+# version: '3'
+# services:
+#   web:
+#     build:
+#       dockerfile: ./docker/Dockerfile
+#       context: ./
+#     container_name: go
+#     stdin_open: true
+#     tty: true
+#     command: "go run main.go"
+#     volumes:
+#       - .:/app
+#     ports:
+#       - "4747:4747"
+#   # db:
+#   #   image: postgres:9.5.9
+#   #   # ports:
+#   #   #   - "5432:5432"
+#   #   volumes:
+#   #     - ./volumes/postgresql:/var/lib/postgresql/data

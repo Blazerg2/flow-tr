@@ -15,12 +15,14 @@ import (
 func main() {
 	fmt.Println("Server started")
 	router := NewRouter()
-	server := http.ListenAndServe(GetPort(), router)
+	port := GetPort()
+	server := http.ListenAndServe(port, router)
+	fmt.Sprintf("Server start %s", port )
 	log.Fatal(server)
 }
 
-var mongoURI = os.Getenv("ATLAS_TEST_G")
-var collection = getSession().DB("test").C("pages")
+var mongoURI = os.Getenv("MONGO_URI")
+var collection = getSession().DB(os.Getenv("MONGO_DATABASE")).C("pages")
 
 func getSession() *mgo.Session {
 	dialInfo, err := mgo.ParseURL(mongoURI)
@@ -95,3 +97,58 @@ func GetPort() string {
 	}
 	return ":" + port
 }
+
+type Route struct {
+	Name        string
+	Method      string
+	Pattern     string
+	HandlerFunc http.HandlerFunc
+}
+
+type Routes []Route
+
+func NewRouter() *mux.Router {
+	router := mux.NewRouter().StrictSlash(true)
+
+	for _, route := range routes {
+		router.Methods(route.Method).Path(route.Pattern).Name(route.Name).Handler(route.HandlerFunc)
+	}
+
+	return router
+}
+
+var routes = Routes{
+	Route{
+		"Index",
+		"GET",
+		"/",
+		Index,
+	},
+	Route{
+		"GetPageVar",
+		"GET",
+		"/pagevar/{pageVarId}",
+		GetPageVar,
+	},
+	Route{
+		"GetPagesList",
+		"GET",
+		"/pages",
+		GetPagesList,
+	},
+	Route{
+		"PostPagesList",
+		"POST",
+		"/pages",
+		PostPagesList,
+	},
+}
+
+
+type Page struct {
+	Text      string `json:"text"`
+	InStates  int    `json:"intStates"`
+	OutStates int    `json:"outStates"`
+}
+
+type Pages []Page

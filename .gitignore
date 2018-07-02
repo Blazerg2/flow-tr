@@ -24,3 +24,7 @@ nbdist/
 .nb-gradle/
 
 vendor
+pkg
+src/github.com
+src/gopkg.in
+volumes
