@@ -13,19 +13,21 @@ services:
     ports:
       - "4747:4747"
     environment:
-      MONGO_URI: mongodb://root:password@mongo:27017
+      MONGO_URI: mongodb://root:password@db:27017
       MONGO_DATABASE: test
     depends_on:
       - db
   db:
     image: mongo
-    # ports:
-    #   - "27017:27017"
+    ports:
+      - "27017:27017"
     volumes:
       - ./volumes/mongo:/data/db
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: password
+  # Connect from web container
+  # mongo -host db -u root -ppassword --authenticationDatabase admin test
 
   # mongo:
   #   image: mongo
