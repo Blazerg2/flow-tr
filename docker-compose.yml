@@ -13,7 +13,7 @@ services:
     ports:
       - "3000:3000"
     environment:
-      PORT: 3000
+      PORT: 3001
       MONGO_URI: mongodb://root:password@db:27017
       MONGO_DATABASE: test
     depends_on:
