@@ -1,12 +1,13 @@
 package controllers
 
 import (
+	"encoding/json"
+	"flow-tr/repositories"
 	"fmt"
 	"net/http"
-	"encoding/json"
-	"app/repositories"
 )
 
+// GetPagesList list pages in json
 func GetPagesList(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("Request /pages")
 	var results, err = repositories.AllPages()

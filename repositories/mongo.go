@@ -2,9 +2,11 @@ package repositories
 
 import (
 	"os"
+
 	"gopkg.in/mgo.v2"
 )
 
+// MongoRepo get mongo connection
 func MongoRepo() *mgo.Database {
 	var mongoURI = os.Getenv("MONGO_URI")
 	session, err := mgo.Dial(mongoURI)

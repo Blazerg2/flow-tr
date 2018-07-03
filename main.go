@@ -3,9 +3,10 @@ package main
 import (
 	"fmt"
 	"net/http"
+
 	// "log"
+	"flow-tr/controllers"
 	"os"
-	"app/controllers"
 	// "crypto/tls"
 	// "net"
 )
@@ -13,13 +14,13 @@ import (
 func main() {
 	// router := NewRouter()
 	port := ":3001"
-	fmt.Println("Server start %s", port )
+	fmt.Println("Server start %s", port)
 	http.HandleFunc("/pages", controllers.GetPagesList)
 	// server := http.ListenAndServe(port, nil)
-	fmt.Println("Server start %s", port )
+	fmt.Println("Server start %s", port)
 	if err := http.ListenAndServe(port, nil); err != nil {
-    panic(err)
-  }
+		panic(err)
+	}
 	// log.Fatal(server)
 }
 
@@ -50,8 +51,6 @@ var routes = Routes{
 	// },
 }
 
-
-
 // func Index(w http.ResponseWriter, r *http.Request) {
 // 	fmt.Fprintf(w, "Hello my underworld")
 // }
@@ -61,8 +60,6 @@ var routes = Routes{
 // 	params := mux.Vars(r)
 // 	fmt.Fprintf(w, params["pageVarId"])
 // }
-
-
 
 // func PostPagesList(w http.ResponseWriter, r *http.Request) {
 // 	decoder := json.NewDecoder(r.Body)

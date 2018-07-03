@@ -1,5 +1,6 @@
 package repositories
 
+// AllPages from mongo repo
 func AllPages() ([]Page, error) {
 	var results []Page
 	collection := MongoRepo().C("pages")
@@ -10,15 +11,15 @@ func AllPages() ([]Page, error) {
 	return results, err
 }
 
+// Page struct
 type Page struct {
 	Text      string `json:"text"`
 	InStates  int    `json:"intStates"`
 	OutStates int    `json:"outStates"`
 }
 
+// Pages struct
 type Pages []Page
-
-
 
 // var mongoURI = os.Getenv("MONGO_URI")
 // var collection = getSession().DB(os.Getenv("MONGO_DATABASE")).C("pages")

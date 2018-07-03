@@ -9,7 +9,7 @@ services:
     tty: true
     command: "gin run main.go"
     volumes:
-      - .:/go/src/app
+      - .:/go/src/flow-tr
     ports:
       - "3000:3000"
     environment:
