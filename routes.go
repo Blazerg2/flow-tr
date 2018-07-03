@@ -1,77 +1,36 @@
 package main
 
 import (
-	"net/http"
-
-	"github.com/gorilla/mux"
+	"flow-tr/controllers"
+	"flow-tr/utils"
 )
 
-type Route struct {
-	Name        string
-	Method      string
-	Pattern     string
-	HandlerFunc http.HandlerFunc
-}
-
-type Routes []Route
-
-func NewRouter() *mux.Router {
-	router := mux.NewRouter().StrictSlash(true)
-
-	for _, route := range routes {
-		router.Methods(route.Method).Path(route.Pattern).Name(route.Name).Handler(route.HandlerFunc)
+// AppRoutes define all routes in http application
+func AppRoutes() utils.Routes {
+	return utils.Routes{
+		utils.Route{
+			"Index",
+			"GET",
+			"/",
+			controllers.Index,
+		},
+		utils.Route{
+			"GetPageVar",
+			"GET",
+			"/pagevar/{pageVarId}",
+			controllers.GetPageVar,
+		},
+		utils.Route{
+			"GetPagesList",
+			"GET",
+			"/pages",
+			controllers.GetPagesList,
+		},
+		utils.Route{
+			"PostPagesList",
+			"POST",
+			"/pages",
+			controllers.PostPagesList,
+		},
 	}
-
-	return router
 }
-
-// import (
-// 	"github.com/gorilla/mux"
-// 	"net/http"
-// )
-
-// type Route struct {
-// 	Name        string
-// 	Method      string
-// 	Pattern     string
-// 	HandlerFunc http.HandlerFunc
-// }
-
-// type Routes []Route
-
-// func NewRouter() *mux.Router {
-// 	router := mux.NewRouter().StrictSlash(true)
-
-// 	for _, route := range routes {
-// 		router.Methods(route.Method).Path(route.Pattern).Name(route.Name).Handler(route.HandlerFunc)
-// 	}
-
-// 	return router
-// }
-
-// var routes = Routes{
-// 	Route{
-// 		"Index",
-// 		"GET",
-// 		"/",
-// 		Index,
-// 	},
-// 	Route{
-// 		"GetPageVar",
-// 		"GET",
-// 		"/pagevar/{pageVarId}",
-// 		GetPageVar,
-// 	},
-// 	Route{
-// 		"GetPagesList",
-// 		"GET",
-// 		"/pages",
-// 		GetPagesList,
-// 	},
-// 	Route{
-// 		"PostPagesList",
-// 		"POST",
-// 		"/pages",
-// 		PostPagesList,
-// 	},
-// }

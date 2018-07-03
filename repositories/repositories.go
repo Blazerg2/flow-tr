@@ -1,14 +1,21 @@
 package repositories
 
+var collection = MongoRepo().C("pages")
+
 // AllPages from mongo repo
 func AllPages() ([]Page, error) {
 	var results []Page
-	collection := MongoRepo().C("pages")
 	err := collection.Find(nil).All(&results)
 	// if err != nil {
 	// 	panic(err)
 	// }
 	return results, err
+}
+
+// SavePage save in pages conllection
+func SavePage(pageData Page) (Page, error) {
+	err := collection.Insert(pageData)
+	return pageData, err
 }
 
 // Page struct

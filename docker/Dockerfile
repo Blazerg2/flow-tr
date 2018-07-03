@@ -12,5 +12,5 @@ RUN go get -d -v gopkg.in/mgo.v2
 RUN go install -v gopkg.in/mgo.v2
 RUN go get -d -v github.com/codegangsta/gin
 RUN go install -v github.com/codegangsta/gin
-WORKDIR /go/src/app
+WORKDIR /go/src/flow-tr
 COPY . .
