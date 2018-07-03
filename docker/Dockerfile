@@ -6,5 +6,11 @@ RUN echo "deb http://repo.mongodb.org/apt/debian stretch/mongodb-org/4.0 main" |
 RUN apt-get update && apt-get install -y mongodb-org
 # ************************************
 
-WORKDIR /go
+RUN go get -d -v github.com/gorilla/mux
+RUN go install -v github.com/gorilla/mux
+RUN go get -d -v gopkg.in/mgo.v2
+RUN go install -v gopkg.in/mgo.v2
+RUN go get -d -v github.com/codegangsta/gin
+RUN go install -v github.com/codegangsta/gin
+WORKDIR /go/src/app
 COPY . .

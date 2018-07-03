@@ -14,7 +14,7 @@ import (
 
 func main() {
 	// router := NewRouter()
-	port := ":4747"
+	port := ":3001"
 	fmt.Println("Server start %s", port )
 	http.HandleFunc("/pages", GetPagesList)
 	// server := http.ListenAndServe(port, nil)
