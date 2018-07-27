@@ -32,10 +32,10 @@ var routes = Routes{
 		Index,
 	},
 	Route{
-		"GetPageVar",
+		"GetPage",
 		"GET",
-		"/pagevar/{pageVarId}",
-		GetPageVar,
+		"/page/{pageId}",
+		GetPage,
 	},
 	Route{
 		"GetPagesList",

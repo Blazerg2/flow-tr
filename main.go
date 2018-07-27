@@ -4,12 +4,14 @@ import (
 	"fmt"
 	"net/http"
 	"log"
-	"github.com/gorilla/mux"
 	"encoding/json"
 	"os"
 	"gopkg.in/mgo.v2"
 	"crypto/tls"
 	"net"
+	"gopkg.in/mgo.v2/bson"
+	"github.com/gorilla/mux"
+	"strconv"
 )
 
 func main() {
@@ -44,10 +46,32 @@ func Index(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, "Hello my underworld")
 }
 
-func GetPageVar(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, "toma tu jodida variable ")
-	params := mux.Vars(r)
-	fmt.Fprintf(w, params["pageVarId"])
+func GetPage(w http.ResponseWriter, r *http.Request) {
+	page := Page{}
+	//keys, ok := r.URL.Query()["character"]
+	keys := r.URL.Query()
+	key := keys.Get("character")
+
+	if key == "" {
+		log.Println("Url Param 'character' is missing")
+		return
+	}
+
+	vars := mux.Vars(r)
+	instate, err := strconv.Atoi(vars["pageId"])
+	if err != nil {
+		return
+	}
+
+	err = collection.Find(bson.M{"instate": instate, "character": key}).One(&page)
+
+	if err != nil {
+		return
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+	json.NewEncoder(w).Encode(page)
 }
 
 func GetPagesList(w http.ResponseWriter, r *http.Request) {

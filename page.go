@@ -2,7 +2,7 @@ package main
 
 type Page struct {
 	Text      string     `json:"text"`
-	InState   int        `json:"intStates"`
+	Instate   int        `json:"instate"`
 	Character string     `json:"character"`
 	Decisions []Decision `json:"decisions"`
 	IsFinal   bool       `json:"isFinal"`
