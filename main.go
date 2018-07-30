@@ -47,6 +47,7 @@ func Index(w http.ResponseWriter, r *http.Request) {
 }
 
 func GetPage(w http.ResponseWriter, r *http.Request) {
+	enableCors(&w)
 	page := Page{}
 	//keys, ok := r.URL.Query()["character"]
 	keys := r.URL.Query()
@@ -118,4 +119,8 @@ func GetPort() string {
 		fmt.Println("INFO: No PORT environment variable detected, defaulting to " + port)
 	}
 	return ":" + port
+}
+
+func enableCors(w *http.ResponseWriter) {
+	(*w).Header().Set("Access-Control-Allow-Origin", "*")
 }
