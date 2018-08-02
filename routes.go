@@ -49,4 +49,10 @@ var routes = Routes{
 		"/pages",
 		PostPagesList,
 	},
+	Route{
+		"GetCharacters",
+		"GET",
+		"/characters",
+		GetCharacters,
+	},
 }
