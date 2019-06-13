@@ -45,7 +45,8 @@ func Index(w http.ResponseWriter, r *http.Request) {
 }
 
 func GetPageVar(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, "toma tu jodida variable ")
+	//TODO stop insulting the user and implement this LOL
+	fmt.Fprintf(w, "Take your stupid variable")
 	params := mux.Vars(r)
 	fmt.Fprintf(w, params["pageVarId"])
 }
