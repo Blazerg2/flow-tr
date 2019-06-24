@@ -9,11 +9,11 @@ import (
 	"os"
 	"gopkg.in/mgo.v2"
 	"crypto/tls"
-	"net"
+	"net"	
 )
 
 func main() {
-	fmt.Println("Server started")
+	fmt.Println("Server started")		
 	router := NewRouter()
 	server := http.ListenAndServe(GetPort(), router)
 	log.Fatal(server)
@@ -22,23 +22,29 @@ func main() {
 var mongoURI = os.Getenv("ATLAS_TEST_G")
 var collection = getSession().DB("test").C("pages")
 
+func CheckError(err error){	
+	if err != nil {
+		log.Print(err)
+	}	
+}
+
 func getSession() *mgo.Session {
 	dialInfo, err := mgo.ParseURL(mongoURI)
-	if (err != nil) {
-		panic(err)
-	}
+	CheckError(err)
+	
 	tlsConfig := &tls.Config{}
 	dialInfo.DialServer = func(addr *mgo.ServerAddr) (net.Conn, error) {
 		conn, err := tls.Dial("tcp", addr.String(), tlsConfig)
 		return conn, err
 	}
 	session, err := mgo.DialWithInfo(dialInfo)
-	if (err != nil) {
-		panic(err)
-	}
+	
+	CheckError(err)
 	log.Println("MongoDB cluster connected")
 	return session
 }
+
+
 
 func Index(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, "Hello my underworld")
@@ -55,9 +61,7 @@ func GetPagesList(w http.ResponseWriter, r *http.Request) {
 	var results []Page
 	err := collection.Find(nil).All(&results)
 
-	if err != nil {
-		panic(err)
-	}
+	CheckError(err)
 
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(200)
@@ -69,17 +73,12 @@ func PostPagesList(w http.ResponseWriter, r *http.Request) {
 
 	var page_data Page
 	err := decoder.Decode(&page_data)
-	if (err != nil) {
-		panic(err)
-	}
+	CheckError(err)
 	defer r.Body.Close()
 
 	err = collection.Insert(page_data)
 
-	if (err != nil) {
-		w.WriteHeader(500)
-		panic(err)
-	}
+	CheckError(err)
 
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(200)
