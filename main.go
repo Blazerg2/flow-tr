@@ -1,15 +1,15 @@
-/package main
+package main
 
 import (
-	"fmt"
-	"net/http"
-	"log"
-	"github.com/gorilla/mux"
-	"encoding/json"
-	"os"
-	"gopkg.in/mgo.v2"
 	"crypto/tls"
+	"encoding/json"
+	"fmt"
+	"github.com/gorilla/mux"
+	"gopkg.in/mgo.v2"
+	"log"
 	"net"
+	"net/http"
+	"os"
 )
 
 func main() {
@@ -24,7 +24,7 @@ var collection = getSession().DB("test").C("pages")
 
 func getSession() *mgo.Session {
 	dialInfo, err := mgo.ParseURL(mongoURI)
-	if (err != nil) {
+	if err != nil {
 		panic(err)
 	}
 	tlsConfig := &tls.Config{}
@@ -33,7 +33,7 @@ func getSession() *mgo.Session {
 		return conn, err
 	}
 	session, err := mgo.DialWithInfo(dialInfo)
-	if (err != nil) {
+	if err != nil {
 		panic(err)
 	}
 	log.Println("MongoDB cluster connected")
@@ -45,8 +45,8 @@ func Index(w http.ResponseWriter, r *http.Request) {
 }
 
 func GetPageVar(w http.ResponseWriter, r *http.Request) {
-	//TODO stop insulting the user and implement this xD
-	fmt.Fprintf(w, "take your stupid variable")
+	//TODO stop insulting the user and implement this LOL
+	fmt.Fprintf(w, "Take your stupid variable")
 	params := mux.Vars(r)
 	fmt.Fprintf(w, params["pageVarId"])
 }
@@ -69,14 +69,14 @@ func PostPagesList(w http.ResponseWriter, r *http.Request) {
 
 	var page_data Page
 	err := decoder.Decode(&page_data)
-	if (err != nil) {
+	if err != nil {
 		panic(err)
 	}
 	defer r.Body.Close()
 
 	err = collection.Insert(page_data)
 
-	if (err != nil) {
+	if err != nil {
 		w.WriteHeader(500)
 		panic(err)
 	}
