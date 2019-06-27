@@ -41,14 +41,14 @@ func getSession() *mgo.Session {
 }
 
 func Index(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, "Hello my underworld")
+	fmt.Fprintf(w, "Hello my underworld") //unhandled error
 }
 
 func GetPageVar(w http.ResponseWriter, r *http.Request) {
 	//TODO stop insulting the user and implement this LOL
-	fmt.Fprintf(w, "Take your stupid variable")
+	fmt.Fprintf(w, "Take your stupid variable") //unhandled error
 	params := mux.Vars(r)
-	fmt.Fprintf(w, params["pageVarId"])
+	fmt.Fprintf(w, params["pageVarId"]) //unhandled error
 }
 
 func GetPagesList(w http.ResponseWriter, r *http.Request) {
@@ -61,7 +61,7 @@ func GetPagesList(w http.ResponseWriter, r *http.Request) {
 
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(200)
-	json.NewEncoder(w).Encode(results)
+	json.NewEncoder(w).Encode(results) //unhandled error
 }
 
 func PostPagesList(w http.ResponseWriter, r *http.Request) {
@@ -72,7 +72,7 @@ func PostPagesList(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		panic(err)
 	}
-	defer r.Body.Close()
+	defer r.Body.Close() //unhandled error
 
 	err = collection.Insert(page_data)
 
@@ -83,7 +83,7 @@ func PostPagesList(w http.ResponseWriter, r *http.Request) {
 
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(200)
-	json.NewEncoder(w).Encode(page_data)
+	json.NewEncoder(w).Encode(page_data) //unhandled error
 }
 
 // Get the Port from the environment so we can run on Heroku
